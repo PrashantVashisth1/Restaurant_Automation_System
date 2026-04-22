@@ -154,14 +154,14 @@ public class DatabaseManager {
     }
 
     private static void seedDefaultData() throws SQLException {
-        // Only seed if users table is empty
-        ResultSet rs = conn.createStatement().executeQuery("SELECT COUNT(*) FROM users");
-        if (rs.getInt(1) > 0) return;
-
-        // Default users (plain text passwords stored with simple hash for demo)
+        // Always ensure all 3 default users exist (INSERT OR IGNORE is safe on existing DBs)
         insertUser("manager", hashPassword("manager123"), "MANAGER");
         insertUser("clerk", hashPassword("clerk123"), "CLERK");
         insertUser("storekeeper", hashPassword("store123"), "STOREKEEPER");
+
+        // Only seed menu/inventory if they are empty
+        ResultSet rs = conn.createStatement().executeQuery("SELECT COUNT(*) FROM menu_items");
+        if (rs.getInt(1) > 0) return;
 
         // Default menu items
         insertMenuItem("B001", "Butter Chicken", "Main Course", 220.00);

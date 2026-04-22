@@ -45,8 +45,9 @@ The system comes pre-configured with the following test accounts:
 
 | Role | Username | Password | Permissions |
 | :--- | :--- | :--- | :--- |
-| **Manager** | `manager` | `manager123` | Full access (POS, Inventory, POs, Invoices, Menu Management, Reports) |
-| **Clerk** | `clerk` | `clerk123` | Limited access (Dashboard, New Order POS) |
+| **Manager** | `manager` | `manager123` | Full access — Dashboard, New Order/Billing, Inventory, Ingredient Usage, Purchase Orders, Invoices, **Menu Management**, **Reports** |
+| **Sales Clerk** | `clerk` | `clerk123` | Dashboard + **New Order / Billing** (POS) only |
+| **Storekeeper** | `storekeeper` | `store123` | Dashboard + **Ingredient Usage, Inventory, Purchase Orders, Invoices** only |
 
 > **Security Note:** Entering an incorrect password 5 consecutive times will lock the account.
 

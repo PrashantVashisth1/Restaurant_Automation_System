@@ -85,19 +85,26 @@ public class MainFrame extends JFrame {
         sidebar.add(userInfo);
         sidebar.add(makeDivider());
 
-        // Navigation items (role-based)
+        // Navigation items — role-based, matching DFD Level 0 & Level 1
         String role = currentUser.getRole();
 
+        // Dashboard — all roles
         addNavItem(sidebar, "📊  Dashboard", () -> showPanel(new DashboardPanel(currentUser)));
-        addNavItem(sidebar, "🛒  New Order", () -> showPanel(new OrderPanel(currentUser)));
 
-        if (role.equals("MANAGER") || role.equals("STOREKEEPER")) {
+        // SALES CLERK: New Order / Billing (P1 in DFD)
+        if (role.equals("CLERK") || role.equals("MANAGER")) {
+            addNavItem(sidebar, "🛒  New Order / Billing", () -> showPanel(new OrderPanel(currentUser)));
+        }
+
+        // STOREKEEPER: Inventory, Ingredient Issuance, Purchase Orders, Invoices (P3, P4, P5 in DFD)
+        if (role.equals("STOREKEEPER") || role.equals("MANAGER")) {
             addNavItem(sidebar, "🌿  Ingredient Usage", () -> showPanel(new IngredientUsagePanel(currentUser)));
             addNavItem(sidebar, "📦  Inventory", () -> showPanel(new InventoryPanel(currentUser)));
             addNavItem(sidebar, "📋  Purchase Orders", () -> showPanel(new PurchaseOrderPanel(currentUser)));
             addNavItem(sidebar, "🧾  Invoices", () -> showPanel(new InvoicePanel(currentUser)));
         }
 
+        // MANAGER ONLY: Menu Management (P2 in DFD), Reports (P6 in DFD)
         if (role.equals("MANAGER")) {
             addNavItem(sidebar, "🍕  Menu Management", () -> showPanel(new MenuManagementPanel(currentUser)));
             addNavItem(sidebar, "📈  Reports", () -> showPanel(new ReportPanel(currentUser)));
